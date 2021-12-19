@@ -1,0 +1,5 @@
+<p><% current_user.name %></p>
+<% @recipes.each do |recipe| %>
+  <%= attachment_image_tag recipe, :image, format: 'jpeg', size: "248x200" %>
+  <%= link_to recipe.name, ingredients_path(:recipe_id =>recipe.id) %><br>
+<% end %>
