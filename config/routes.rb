@@ -4,13 +4,14 @@ Rails.application.routes.draw do
 
   root to: 'homes#top'
 
-  resources :recipes
-  
+  resources :recipes do
+    resource :favorites, only: [:create, :index, :destroy]
+  end
+
   resources :menus, only:[:index, :create, :update, :destroy]
-  resources :favorites, only:[:create, :destroy]
   resources :histories, only:[:index, :show]
   resources :ingredients, only:[:index]
-  
+
   resources :users, only:[:show]
   resources :recipe_ings, only:[:index, :create, :update, :destroy] do
     collection do

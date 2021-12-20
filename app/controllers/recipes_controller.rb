@@ -8,6 +8,8 @@ class RecipesController < ApplicationController
 
   def show
     @recipe  = Recipe.find(params[:id])
+    @recipes = current_user.recipes
+    @recipe_ings =current_user.recipe_ings
     ##@image = @racipe.image
   end
 
@@ -41,8 +43,9 @@ class RecipesController < ApplicationController
   end
 
   def destroy
+    @recipe = Recipe.find(params[:id])
     @recipe.destroy
-    redirect_to recipe_path
+    redirect_to recipes_path
   end
 
   private

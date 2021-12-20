@@ -1,4 +1,25 @@
  <%= attachment_image_tag @recipe, :image, format: 'jpeg', size: "248x200"%>
  <%= @recipe.name %>
  <%= @recipe.explanation %>
+ <% @recipe_ings.each do |recipe_ing| %>
+ <%= recipe_ing.ingredient.name %>
+ <% end %>
 
+ <%# if current_user == @recipe.user_id %>
+ <%= link_to "削除",recipe_path(@recipe), method: :delete, class: "mx-auto btn btn-outline-dark" %>
+ <%# end %>
+ <%#= link_to "材料選択へ進む",　ingredients_path(:recipe_id =>recipe.id), class: "mx-auto btn btn-outline-dark" %>
+
+<% if @recipe.favorited_by?(current_user) %>
+    <p>
+      <%= link_to recipe_favorites_path(@recipe), method: :delete do %>
+        ♥<%= @recipe.favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to recipe_favorites_path(@recipe), method: :post do %>
+        ♡<%= @recipe.favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>

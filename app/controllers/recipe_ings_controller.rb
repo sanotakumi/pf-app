@@ -43,7 +43,7 @@ class RecipeIngsController < ApplicationController
 
   def update
     @recipe_ing = RecipeIng.find(params[:id])
-    if @recipe_ing.update(recipe_ing_params)
+    if @recipe_ing.update
       redirect_to request.referer
     else
       redirect_to request.referer

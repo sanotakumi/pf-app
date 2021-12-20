@@ -58,7 +58,7 @@
             <td class="align-middle "><%= recipe_ing.ingredient.ing_vit_b2 %>mg</td>
             <td class="align-middle "><%= recipe_ing.ingredient.ing_vit_c %>mg</td>
             <td class="align-middle">
-              <%= form_with model: recipe_ing, url: recipe_ing_path(recipe_ing), method: :patch, local: true do |f| %>
+              <%= form_with model: @recipe_ing, url: recipe_ing_path(recipe_ing), method: :patch, local: true do |f| %>
                 <div>
                   <%= f.select :quantity, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], {}, {class: "col-auto rounded"} %>
                   <%= f.submit "変更",class: "btn btn-outline-dark" %>
@@ -108,7 +108,7 @@
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b1) %>
-              <%= @total_vit_b1.round.to_s(:delimited)%>mg
+              <%= @total_vit_b1.to_s(:delimited)%>mg
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b2) %>

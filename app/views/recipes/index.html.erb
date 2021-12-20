@@ -3,7 +3,7 @@
   <h4 class = "col-3 text-center" style = "background-color:lightgray">レシピ一覧</h4>
   <div class="d-flex flex-wrap">
     <% @recipes.each do |recipe| %>
-      <% if recipe.recipe_ings.present? %>
+      <%# if recipe.recipe_ings.present? %>
       <div class="col-md-3">
         <div class="card">
           <div class="col-xs-3" style="padding-right: 0px; padding-left: 0px;">
@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <% end %>
+      <%# end %>
     <% end %>
   </div>
 </div>
