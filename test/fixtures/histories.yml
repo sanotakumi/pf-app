@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  menu_id: 1
+  recipe_id: 1
+  total_protein: 1.5
+  total_fat: 1.5
+  total_cal: 1
+  total_carbon: 1.5
+  total_salt: 1.5
+  total_vit_b1: 1.5
+  total_vit_b2: 1.5
+  total_vit_c: 1.5
+
+two:
+  user_id: 1
+  menu_id: 1
+  recipe_id: 1
+  total_protein: 1.5
+  total_fat: 1.5
+  total_cal: 1
+  total_carbon: 1.5
+  total_salt: 1.5
+  total_vit_b1: 1.5
+  total_vit_b2: 1.5
+  total_vit_c: 1.5

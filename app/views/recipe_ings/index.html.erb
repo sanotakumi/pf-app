@@ -1,0 +1,140 @@
+<% if !@recipe_ings.present? %>
+
+  <div class="container">
+      <div class= "row py-3 px-5">
+    <div class= "text-start design">
+      <h2 style= "background-color:lightgray">材料確認</h2>
+    </div>
+    <div class= "ml-auto">
+      <%= link_to "材料選択に戻る", ingredients_path, class: "btn btn-outline-success" %>
+    </div>
+  </div>
+      <div class="info d-flex align-items-center justify-content-center" style="height:600px">
+        <h1>材料が存在しません</h1>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+<% @sum=0 %>
+<div class= "container">
+  <div class= "row py-3 px-5">
+
+    <div class= "text-start design">
+      <h2 style= "background-color:lightgray">材料確認</h2>
+    </div>
+    <div class= "ml-auto">
+      <%= link_to "カートを空にする", destroy_all_recipe_ings_path, method: :delete, class: "btn btn-outline-danger" %>
+    </div>
+  </div>
+
+<div class= "container">
+  <div class= "row">
+    <div class= "col-12 text-start">
+      <table class= "table table-bordered">
+        <thead style= "color: #FFF; font-weight: bold; background:#00BCD4;">
+          <th>商品ID</th>
+          <th>食材名</th>
+          <th>カロリー</th>
+          <th>たんぱく質</th>
+          <th>脂質</th>
+          <th>炭水化物</th>
+          <th>食塩相当量</th>
+          <th>ビタミンB1</th>
+          <th>ビタミンB2</th>
+          <th>ビタミンC</th>
+        </thead>
+        <tbody>
+          <% @recipe_ings.each do |recipe_ing| %>
+          <tr>
+            <td class="align-middle "><%= recipe_ing.ingredient.id %></td>
+            <td class="align-middle "><%= recipe_ing.ingredient.name %></td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_cal %>Kcal</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_protein %>g</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_fat %>g</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_carbon %>g</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_salt %>g</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_vit_b1 %>mg</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_vit_b2 %>mg</td>
+            <td class="align-middle "><%= recipe_ing.ingredient.ing_vit_c %>mg</td>
+            <td class="align-middle">
+              <%= form_with model: @recipe_ing, url: recipe_ing_path(recipe_ing), method: :patch, local: true do |f| %>
+                <div>
+                  <%= f.select :quantity, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], {}, {class: "col-auto rounded"} %>
+                  <%= f.submit "変更",class: "btn btn-outline-dark" %>
+                </div>
+              <% end %>
+            </td>
+            <td class="align-middle">
+              <%= link_to "削除する", recipe_ing_path(recipe_ing.id), method: :delete, class: "btn btn-outline-dark" %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <h2 style= "background-color:lightgray">栄養素の合計</h2>
+      <table class= "table table-bordered">
+        <thead style= "color: #FFF; font-weight: bold; background:#32CD32;">
+          <th>カロリー</th>
+          <th>たんぱく質</th>
+          <th>脂質</th>
+          <th>炭水化物</th>
+          <th>食塩相当量</th>
+          <th>ビタミンB1</th>
+          <th>ビタミンB2</th>
+          <th>ビタミンC</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_cal) %>
+              <%= @total_cal.round.to_s(:delimited)%>Kcal
+            </td>
+            <td class="align-middle ">
+              <%# calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_protein) %>
+              <%= @total_protein.round.to_s(:delimited)%>g
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_fat) %>
+              <%= @total_fat.round.to_s(:delimited)%>g
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_carbon) %>
+              <%= @total_carbon.round.to_s(:delimited)%>g
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_salt) %>
+              <%= @total_salt.round.to_s(:delimited)%>g
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b1) %>
+              <%= @total_vit_b1.to_s(:delimited)%>mg
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b2) %>
+              <%= @total_vit_b2.round.to_s(:delimited)%>mg
+            </td>
+            <td class="align-middle ">
+              <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_c) %>
+              <%= @total_vit_c.round.to_s(:delimited)%>mg
+            </td>
+          </tr>
+        </tbody>
+
+
+        <div class= "row py-3 px-4">
+          <div class= "col-sm-6 ">
+          　<%= link_to "材料選択に戻る", ingredients_path, class: "btn btn-outline-dark" %>
+        　</div>
+        </div>
+    </div>
+  </div>
+
+  <div class= "row py-3">
+    <div class="col-12 text-center">
+    <%#= link_to "材料を確定", recipe_path(recipe_ing.recipe.id), class: "btn btn-success btn-lg" %>
+    </div>
+  </div>
+</div>
+
+<% end %>
