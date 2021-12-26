@@ -7,10 +7,18 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe  = Recipe.find(params[:id])
-    @recipes = current_user.recipes
-    @recipe_ings =current_user.recipe_ings
-    ##@image = @racipe.image
+    @recipe = Recipe.find(params[:id])
+    @menu = Menu.new
+    @user = current_user
+    @recipe_ings = @recipe.recipe_ings
+    # @recipe.cal = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_cal }
+    # @recipe.protein = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_protein }
+    # @recipe.fat = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_fat }
+    # @recipe.carbon = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_carbon }
+    # @recipe.salt = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_salt }
+    # @recipe.vit_b1 = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_vit_b1 }
+    # @recipe.vit_b2 = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_vit_b2 }
+    # @recipe.vit_c = @recipe_ings.inject(0) { |sum, ingredient| sum + ingredient.sum_of_ing_vit_c }
   end
 
   def new
@@ -50,7 +58,7 @@ class RecipesController < ApplicationController
 
   private
     def recipe_params
-      params.require(:recipe).permit(:image, :name, :explanation,)
+      params.require(:recipe).permit(:image, :name, :explanation, :cal, :protein, :fat, :carbon, :salt, :vit_b1, :vit_b2, :vit_c)
     end
 
 end

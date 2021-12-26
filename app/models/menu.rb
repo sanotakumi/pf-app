@@ -1,5 +1,8 @@
 class Menu < ApplicationRecord
+
+  attribute :quantity, :integer,  default: '1'
+
   belongs_to :user
-  has_many :recipes,through: :histries,source: :item
-  has_many :histories, dependent: :destroy
+  belongs_to :recipe
+
 end

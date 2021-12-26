@@ -1,1 +1,75 @@
-一覧
+<% if !@menus.present? %>
+
+  <div class="container">
+      <div class= "row py-3 px-5">
+    <div class= "text-start design">
+      <h2 style= "background-color:lightgray">今日の献立</h2>
+    </div>
+    <div class= "ml-auto">
+      <%= link_to "レシピ一覧に戻る", recipes_path, class: "btn btn-outline-success" %>
+    </div>
+  </div>
+      <div class="info d-flex align-items-center justify-content-center" style="height:600px">
+        <h1>料理が存在しません</h1>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+<% @sum=0 %>
+<div class= "container">
+  <div class= "row py-3 px-5">
+
+    <div class= "text-start design">
+      <h2 style= "background-color:lightgray">今日の献立</h2>
+    </div>
+    <div class= "ml-auto">
+      <%= link_to "全削除", destroy_all_menus_path, method: :delete, class: "btn btn-outline-danger" %>
+    </div>
+  </div>
+
+<div class= "container">
+  <div class= "row">
+    <div class= "col-12 text-start">
+      <table class= "table table-bordered">
+        <thead style= "color: #FFF; font-weight: bold; background:#00BCD4;">
+          <th>商品画像</th>
+          <th>食材名</th>
+        </thead>
+        <tbody>
+          <% @menus.each do |menu| %>
+          <tr>
+            <td class="align-middle "><%= attachment_image_tag @recipe, :image, format: 'jpeg', size: "100x100"%></td>
+            <td class="align-middle "><%= menu.recipe.name %></td>
+            <td class="align-middle">
+              <%= form_with model: @menu, url: menu_path(menu), method: :patch, local: true do |f| %>
+                <div>
+                  <%= f.select :quantity, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], {selected: menu.quantity}, {class: "col-auto rounded"} %>
+                  <%= f.submit "変更",class: "btn btn-outline-dark" %>
+                </div>
+              <% end %>
+            </td>
+            <td class="align-middle">
+              <%= link_to "削除する", menu_path(menu.id, menu_id: params[:menu_id]), method: :delete, class: "btn btn-outline-dark" %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+        <div class= "row py-3 px-4">
+          <div class= "col-sm-6 ">
+          　<%= link_to "レシピ一覧に戻る", recipes_path(menu_id: params[:menu_id]), class: "btn btn-outline-dark" %>
+        　</div>
+        </div>
+    </div>
+  </div>
+
+  <div class= "row py-3">
+    <div class="col-12 text-center">
+    <%#= link_to "材料を確定", orders_path, class: "btn btn-success btn-lg" %>
+    </div>
+  </div>
+</div>
+
+<% end %>

@@ -4,6 +4,7 @@ class RecipeIng < ApplicationRecord
 
   belongs_to :user
   belongs_to :ingredient
+  belongs_to :recipe
 
   def sum_of_ing_cal
     ingredient.ing_cal * quantity
