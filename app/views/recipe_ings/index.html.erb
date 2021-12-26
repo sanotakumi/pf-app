@@ -6,7 +6,7 @@
       <h2 style= "background-color:lightgray">材料確認</h2>
     </div>
     <div class= "ml-auto">
-      <%= link_to "材料選択に戻る", ingredients_path, class: "btn btn-outline-success" %>
+      <%= link_to "材料選択に戻る", ingredients_path(recipe_id: @recipe), class: "btn btn-outline-success" %>
     </div>
   </div>
       <div class="info d-flex align-items-center justify-content-center" style="height:600px">
@@ -24,7 +24,7 @@
       <h2 style= "background-color:lightgray">材料確認</h2>
     </div>
     <div class= "ml-auto">
-      <%= link_to "カートを空にする", destroy_all_recipe_ings_path, method: :delete, class: "btn btn-outline-danger" %>
+      <%= link_to "カートを空にする", destroy_all_recipe_ings_path(recipe_id: @recipe.id), method: :delete, class: "btn btn-outline-danger" %>
     </div>
   </div>
 
@@ -60,19 +60,20 @@
             <td class="align-middle">
               <%= form_with model: @recipe_ing, url: recipe_ing_path(recipe_ing), method: :patch, local: true do |f| %>
                 <div>
-                  <%= f.select :quantity, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], {}, {class: "col-auto rounded"} %>
+                  <%= f.select :quantity, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], {selected: recipe_ing.quantity}, {class: "col-auto rounded"} %>
                   <%= f.submit "変更",class: "btn btn-outline-dark" %>
                 </div>
               <% end %>
             </td>
             <td class="align-middle">
-              <%= link_to "削除する", recipe_ing_path(recipe_ing.id), method: :delete, class: "btn btn-outline-dark" %>
+              <%= link_to "削除する", recipe_ing_path(recipe_ing.id, recipe_id: params[:recipe_id]), method: :delete, class: "btn btn-outline-dark" %>
             </td>
           </tr>
           <% end %>
         </tbody>
       </table>
       <h2 style= "background-color:lightgray">栄養素の合計</h2>
+      <%= form_with model: @recipe, method: :patch, local: true do |f| %>
       <table class= "table table-bordered">
         <thead style= "color: #FFF; font-weight: bold; background:#32CD32;">
           <th>カロリー</th>
@@ -88,53 +89,63 @@
           <tr>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_cal) %>
-              <%= @total_cal.round.to_s(:delimited)%>Kcal
+              <%= f.hidden_field :cal, value: @total_cal.to_i %>
+              <%= @total_cal.round(2) %>Kcal
             </td>
             <td class="align-middle ">
               <%# calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_protein) %>
-              <%= @total_protein.round.to_s(:delimited)%>g
+              <%= f.hidden_field :protein, value: @total_protein %>
+              <%= @total_protein.round(2) %>g
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_fat) %>
-              <%= @total_fat.round.to_s(:delimited)%>g
+              <%= f.hidden_field :fat, value: @total_fat %>
+              <%= @total_fat.round(2)%>g
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_carbon) %>
-              <%= @total_carbon.round.to_s(:delimited)%>g
+              <%= f.hidden_field :carbon, value: @total_carbon %>
+              <%= @total_carbon.round(2)%>g
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_salt) %>
-              <%= @total_salt.round.to_s(:delimited)%>g
+              <%= f.hidden_field :salt, value: @total_salt %>
+              <%= @total_salt.round(2)%>g
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b1) %>
-              <%= @total_vit_b1.to_s(:delimited)%>mg
+              <%= f.hidden_field :vit_b1, value: @total_vit_b1 %>
+              <%= @total_vit_b1.round(2)%>mg
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_b2) %>
-              <%= @total_vit_b2.round.to_s(:delimited)%>mg
+              <%= f.hidden_field :vit_b2, value: @total_vit_b2 %>
+              <%= @total_vit_b2.round(2)%>mg
             </td>
             <td class="align-middle ">
               <%#= calc_nutrition(recipe_ing.quantity, recipe_ing.ingredient.ing_vit_c) %>
-              <%= @total_vit_c.round.to_s(:delimited)%>mg
+              <%= f.hidden_field :vit_c, value: @total_vit_c %>
+              <%= @total_vit_c.round(2)%>mg
             </td>
           </tr>
         </tbody>
-
+      </table>
+      <div class= "row py-3">
+        <div class="col-12 text-center">
+          <%= f.submit "材料を確定", class: "btn btn-success btn-lg" %>
+        </div>
+  </div>
+      <% end %>
 
         <div class= "row py-3 px-4">
           <div class= "col-sm-6 ">
-          　<%= link_to "材料選択に戻る", ingredients_path, class: "btn btn-outline-dark" %>
+          　<%= link_to "材料選択に戻る", ingredients_path(recipe_id: params[:recipe_id]), class: "btn btn-outline-dark" %>
         　</div>
         </div>
     </div>
   </div>
 
-  <div class= "row py-3">
-    <div class="col-12 text-center">
-    <%#= link_to "材料を確定", recipe_path(recipe_ing.recipe.id), class: "btn btn-success btn-lg" %>
-    </div>
-  </div>
+
 </div>
 
 <% end %>

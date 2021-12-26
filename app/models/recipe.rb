@@ -1,9 +1,8 @@
 class Recipe < ApplicationRecord
 
-
   belongs_to :user
 
-
+  has_many :menus, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :recipe_ings, dependent: :destroy
   has_many :ingredints, through: :recipe_ings, source: 'Ingredient'

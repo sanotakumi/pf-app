@@ -1,7 +1,53 @@
-<p><% current_user.name %></p>
-<% @recipes.each do |recipe| %>
-  <%= attachment_image_tag recipe, :image, format: 'jpeg', size: "248x200" %>
-  <%= link_to recipe.name, ingredients_path(:recipe_id =>recipe.id) %><br>
-<% end %>
+<div class = "container o-8column">
 
-<%= link_to 'レシピ新規作成', new_recipe_path %><br>
+  <div class = "row">
+    <h4 class = "col-3 text-center" style = "background-color:lightgray">マイページ</h4>
+  </div>
+
+  <table class = "table table-borderless">
+    <tr class = "row">
+       <td calss = "col-2"><strong>登録情報</strong></td>
+       <td calss = "col-4"><%= link_to '編集する', edit_user_path(@user), class: "btn btn-success" %></td>
+     </tr>
+  </table>
+
+
+
+   <table class = "table table-border-dark" style = "width: 60%;">
+     <tbody>
+       <tr class = "row">
+        <td class = "col-4", style = "background-color:lightgray">氏名</td>
+         <td class = "col-8"><%= @user.name %></td>
+       </tr>
+    </tbody>
+  </table>
+
+<%#= link_to recipe.name, ingredients_path(:recipe_id =>recipe.id) %>
+
+    <h5 class = "col-4 mt-5 text-center" style = "background-color:lightgray">材料未確定レシピ</h4>
+    <div class="row d-flex flex-wrap">
+      <% @recipes.each do |recipe| %>
+        <% if !recipe.recipe_ings.present? %>
+        <div class="mr-3">
+          <div class="card">
+            <div class="col-xs-3" style="padding-right: 0px; padding-left: 0px;">
+              <%= link_to ingredients_path(:recipe_id =>recipe.id) ,style: "color: black;", data: {"turbolinks" => false} do %>
+                <%= attachment_image_tag recipe, :image, format: 'jpeg', size: "248x200"%><br>
+                <%= recipe.name %><br>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+
+  <div class = "row mt-5">
+    <h4 class = "col-3 text-center" style = "background-color:lightgray">リンク</h4>
+  </div>
+
+  <div class = "row">
+    <!--後日追加予定機能-->
+  <%#= link_to '一覧を見る',menus_path(@user), class: "btn btn-primary" %>
+    <%= link_to 'レシピ新規作成', new_recipe_path, class: "btn btn-outline-dark"%>
+  </div>

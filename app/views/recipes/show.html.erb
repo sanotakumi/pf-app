@@ -1,14 +1,93 @@
- <%= attachment_image_tag @recipe, :image, format: 'jpeg', size: "248x200"%>
- <%= @recipe.name %>
- <%= @recipe.explanation %>
- <% @recipe_ings.each do |recipe_ing| %>
- <%= recipe_ing.ingredient.name %>
- <% end %>
+<div class="container my-5">
+  <div class="row mx-auto">
+    <%= attachment_image_tag @recipe, :image, format: "jpeg", fallback: "no_image.jpg", size: "400x300" %>
+      <div class="ml-5">
+        <h1 class="mt-3"><%= @recipe.name %></h1>
+          <p class="h4 mt-2 pb-5"><%= @recipe.explanation %></p>
+      </div>
+  </div>
+</div>
+<%= link_to "編集", recipe_ings_path(recipe_id: @recipe), class: 'btn btn-primary' %>
+<%= link_to "削除",recipe_path(@recipe), method: :delete, class: "mx-auto btn btn-outline-dark" %>
+      <!--  <%#= form_with model: @menu, url: menus_path(current_user), local:true do |f| %>-->
+      <!--  <%#= f.hidden_field :user_id, value: current_user.id %>-->
+      <!--  <%#= f.hidden_field :recipe_id, value: @recipe.id %>-->
+      <!--<div>-->
+      <!--  <%#= f.select :quantity, *[1..10] %>-->
+      <!--  <%#= f.submit "カートに入れる", class: "btn btn-success" %>-->
+      <!--</div>-->
+      <%# end %>
+  <table class= "table table-bordered">
+    <thead style= "color: #FFF; font-weight: bold; background:#00BCD4;">
+      <th>商品ID</th>
+      <th>食材名</th>
+      <th>カロリー</th>
+      <th>たんぱく質</th>
+      <th>脂質</th>
+      <th>炭水化物</th>
+      <th>食塩相当量</th>
+      <th>ビタミンB1</th>
+      <th>ビタミンB2</th>
+      <th>ビタミンC</th>
+    </thead>
+  <tbody>
+    <% @recipe_ings.each do |recipe_ing| %>
+    <tr>
+      <td class="align-middle"><%= recipe_ing.ingredient.id %></td>
+      <td class="align-middle"><%= recipe_ing.ingredient.name %></td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_cal %>Kcal</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_protein %>g</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_fat %>g</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_carbon %>g</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_salt %>g</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_vit_b1 %>mg</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_vit_b2 %>mg</td>
+      <td class="align-middle"><%= recipe_ing.ingredient.ing_vit_c %>mg</td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
- <%# if current_user == @recipe.user_id %>
- <%= link_to "削除",recipe_path(@recipe), method: :delete, class: "mx-auto btn btn-outline-dark" %>
- <%# end %>
- <%#= link_to "材料選択へ進む",　ingredients_path(:recipe_id =>recipe.id), class: "mx-auto btn btn-outline-dark" %>
+<table class= "table table-bordered">
+  <thead style= "color: #FFF; font-weight: bold; background:#32CD32;">
+    <th>カロリー</th>
+    <th>たんぱく質</th>
+    <th>脂質</th>
+    <th>炭水化物</th>
+    <th>食塩相当量</th>
+    <th>ビタミンB1</th>
+    <th>ビタミンB2</th>
+    <th>ビタミンC</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="align-middle ">
+      <%= @recipe.cal.round(2) if @recipe.cal != nil %>Kcal
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.protein.round(2) if @recipe.protein != nil %>g
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.fat.round(2) if @recipe.fat != nil %>g
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.carbon.round(2) if @recipe.carbon != nil %>g
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.salt.round(2) if @recipe.salt != nil %>g
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.vit_b1.round(2) if @recipe.vit_b1 != nil %>mg
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.vit_b2.round(2) if @recipe.vit_b2 != nil %>mg
+    </td>
+    <td class="align-middle ">
+      <%= @recipe.vit_c.round(2) if @recipe.vit_c != nil %>mg
+    </td>
+  </tr>
+</tbody>
+
 
 <% if @recipe.favorited_by?(current_user) %>
     <p>
